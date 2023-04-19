@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Administrador de CPU y Disco Duro</title>
+    
+    <script>
+        async function updateDiskUsage() {
+            const usage = await window.backend.GetDiskUsage()
+            document.getElementById('disk-usage').textContent = usage.toFixed(2) + '%'
+            const cpuUsage = await window.backend.getCPUPercentage()
+            document.getElementById('cpu-usage').textContent = cpuUsage.toFixed(2) + '%'
+        }
+        setInterval(updateDiskUsage, 1000)
+    </script>
+</head>
+<body>
+    <div class='logo'></div>
+	<h1>Monitor de Disco Duro</h1>
+    <p>Uso de Disco: <span id="disk-usage"></span></p>
+	<div style="width: 80%" id="chart">
+    	
+	</div>
+	<p>Uso de CPU: <span id="cpu-usage"></span></p>
+    <script>
+        window.backend.OnBackendInitialized = () => {
+            updateDiskUsage()
+        }
+    </script>
+    
+</body>
+</html>
